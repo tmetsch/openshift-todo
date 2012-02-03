@@ -7,18 +7,32 @@ from pyramid.view import view_config
 import os
 import sqlite3
 
-# here = os.environ['OPENSHIFT_APP_DIR']
-here = os.environ['OPENSHIFT_APP_DIR'] = os.path.dirname(os.path.abspath(__file__))
+here = os.environ['OPENSHIFT_APP_DIR']
 
-# views
+#===============================================================================
+# The Pyramid Views 
+#===============================================================================
+
+
 @view_config(route_name='list', renderer='list.mako')
 def list_view(request):
+    '''
+    List a bunch of todo items.
+    
+    request -- The request object.
+    '''
     rs = request.db.execute("select id, name from tasks where closed = 0")
     tasks = [dict(id=row[0], name=row[1]) for row in rs.fetchall()]
     return {'tasks': tasks}
 
+
 @view_config(route_name='new', renderer='new.mako')
 def new_view(request):
+    '''
+    Insert a new entry in the db.
+        
+    request -- The request object.
+    '''
     if request.method == 'POST':
         if request.POST.get('name'):
             request.db.execute('insert into tasks (name, closed) values (?, ?)',
@@ -30,31 +44,62 @@ def new_view(request):
             request.session.flash('Please enter a name for the task!')
     return {}
 
+
 @view_config(route_name='close')
 def close_view(request):
+    '''
+    Resolve an open todo item.
+        
+    request -- The request object.
+    '''
     task_id = int(request.matchdict['id'])
     request.db.execute("update tasks set closed = ? where id = ?", (1, task_id))
     request.db.commit()
     request.session.flash('Task was successfully closed!')
     return HTTPFound(location=request.route_url('list'))
 
+
 @view_config(context='pyramid.exceptions.NotFound', renderer='notfound.mako')
 def notfound_view(self):
+    '''
+    Do this on 404 errors :-)
+    '''
     return {}
 
-# subscribers
+#===============================================================================
+# The pyramid subscribers
+#===============================================================================
+
+
 @subscriber(NewRequest)
 def new_request_subscriber(event):
+    '''
+    The entry point.
+    
+    event -- An event.
+    '''
     request = event.request
     settings = request.registry.settings
     request.db = sqlite3.connect(settings['db'])
     request.add_finished_callback(close_db_connection)
 
+
 def close_db_connection(request):
+    '''
+    Close the sqllite connection.
+        
+    request -- The request object.
+    '''
     request.db.close()
+
 
 @subscriber(ApplicationCreated)
 def application_created_subscriber(event):
+    '''
+    When the application is created - make a new clean db.
+    
+    event - An event.
+    '''
     f = open(os.path.join(here, '..', 'data', 'schema.sql'), 'r')
     stmt = f.read()
     settings = event.app.registry.settings
@@ -63,7 +108,15 @@ def application_created_subscriber(event):
     db.commit()
     f.close()
 
+#===============================================================================
+# The WSGI part...
+#===============================================================================
+
+
 def application(environ, start_response):
+    '''
+    A WSGI application.
+    '''
     # configuration settings
     settings = {}
     settings['reload_all'] = True
