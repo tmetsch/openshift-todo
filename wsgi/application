@@ -10,7 +10,7 @@ try:
 except IOError:
     pass
 
-from wsgi_todo import application
+from todo import application
 
 if __name__ == '__main__':
     from wsgiref.simple_server import make_server
