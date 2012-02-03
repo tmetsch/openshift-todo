@@ -1,9 +1,7 @@
 #!/usr/bin/python
 
-#import os
-
 #datadir = os.path.dirname(os.path.abspath(__file__)) + '/wsgi'
-#datadir = os.environ['DOCUMENT_ROOT']
+#datadir = os.environ['OPENSHIFT_APP_DIR']
 #here = os.path.join(datadir, '..')
 #here = datadir
 
@@ -17,6 +15,8 @@ def application(environ, start_response):
     ret = ["%s: %s\n" % (key, value)
            for key, value in environ.iteritems()]
     return ret
+
+
 
 
 if __name__ == '__main__':

@@ -71,3 +71,25 @@ def application_created_subscriber(event):
     db.commit()
     f.close()
 
+def application(environ, start_response):
+    # configuration settings
+    settings = {}
+    settings['reload_all'] = True
+    settings['debug_all'] = True
+    settings['mako.directories'] = os.path.join(here, 'static')
+    settings['db'] = os.path.join(here, '..', 'data', 'tasks.db')
+    # session factory
+    session_factory = UnencryptedCookieSessionFactoryConfig('itsaseekreet')
+    # configuration setup
+    config = Configurator(settings=settings, session_factory=session_factory)
+    # routes setup
+    config.add_route('list', '/')
+    config.add_route('new', '/new')
+    config.add_route('close', '/close/{id}')
+    # static view setup
+    config.add_static_view('static', os.path.join(here, 'static'))
+    # scan for @view_config and @subscriber decorators
+    config.scan(package='wsgi_todo')
+
+    # serve app
+    return config.make_wsgi_app()(environ, start_response)
