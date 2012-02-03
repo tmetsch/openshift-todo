@@ -1,10 +1,13 @@
 from setuptools import setup
 
-setup(name='YourAppName',
+setup(name='A simple TODO Application to test OpenShift Features.',
       version='1.0',
-      description='OpenShift App',
-      author='Your Name',
-      author_email='example@example.com',
-      url='http://www.python.org/sigs/distutils-sig/',
-#      install_requires=['Django>=1.3'],
+      description='An OpenShift App',
+      author='Thijs Metsch',
+      author_email='thijs.metsch@opensolaris.org',
+      install_requires=['pyramid'],
+      classifiers=[
+                     'Operating System :: OS Independent',
+                     'Programming Language :: Python',
+                    ],
      )
