@@ -45,6 +45,8 @@ def application2(environ, start_response):
     # serve app
     return config.make_wsgi_app()(environ, start_response)
 
+application = application()
+
 if __name__ == '__main__':
     from wsgiref.simple_server import make_server
     httpd = make_server('localhost', 8051, application)
