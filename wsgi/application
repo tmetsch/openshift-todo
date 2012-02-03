@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import os
+#import os
 
 #datadir = os.path.dirname(os.path.abspath(__file__)) + '/wsgi'
 #datadir = os.environ['DOCUMENT_ROOT']
