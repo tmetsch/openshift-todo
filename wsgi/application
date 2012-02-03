@@ -4,13 +4,23 @@ from pyramid.session import UnencryptedCookieSessionFactoryConfig
 import os
 import wsgi_todo
 
-datadir = os.environ['OPENSHIFT_DATA_DIR']
 #datadir = os.path.dirname(os.path.abspath(__file__)) + '/wsgi'
-here = os.path.join(datadir, '..')
-#here = datadir
-
+datadir = os.environ['OPENSHIFT_APP_DIR']
+#here = os.path.join(datadir, '..')
+here = datadir
 
 def application(environ, start_response):
+
+    status = '200 OK'
+    headers = [('Content-type', 'text/plain')]
+
+    start_response(status, headers)
+
+    ret = ["%s: %s\n" % (key, value)
+           for key, value in environ.iteritems()]
+    return ret
+
+def application2(environ, start_response):
     wsgi_todo.here = here
 
     # configuration settings
