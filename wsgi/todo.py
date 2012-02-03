@@ -7,7 +7,7 @@ from pyramid.view import view_config
 import os
 import sqlite3
 
-here = os.environ['OPENSHIFT_APP_DIR']
+here = os.environ['OPENSHIFT_APP_DIR'] = os.path.dirname(os.path.abspath(__file__))
 
 #===============================================================================
 # The Pyramid Views 
