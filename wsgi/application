@@ -1,23 +1,17 @@
 #!/usr/bin/python
-
-#datadir = os.path.dirname(os.path.abspath(__file__)) + '/wsgi'
-#datadir = os.environ['OPENSHIFT_APP_DIR']
-#here = os.path.join(datadir, '..')
-#here = datadir
+import wsgi_todo
 
 def application(environ, start_response):
 
-    status = '200 OK'
-    headers = [('Content-type', 'text/plain')]
-
-    start_response(status, headers)
-
-    ret = ["%s: %s\n" % (key, value)
-           for key, value in environ.iteritems()]
-    return ret
-
-
-
+#    status = '200 OK'
+#    headers = [('Content-type', 'text/plain')]
+#
+#    start_response(status, headers)
+#
+#    ret = ["%s: %s\n" % (key, value)
+#           for key, value in environ.iteritems()]
+#    return ret
+    return wsgi_todo.application(environ, start_response)
 
 if __name__ == '__main__':
     from wsgiref.simple_server import make_server

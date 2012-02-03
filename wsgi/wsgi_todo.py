@@ -1,22 +1,14 @@
-import os
-
 from pyramid.config import Configurator
-from pyramid.events import NewRequest
-from pyramid.events import subscriber
-from pyramid.events import ApplicationCreated
+from pyramid.events import ApplicationCreated, NewRequest, subscriber
 from pyramid.httpexceptions import HTTPFound
 from pyramid.session import UnencryptedCookieSessionFactoryConfig
 from pyramid.view import view_config
 
-from wsgiref.simple_server import make_server
-
+import os
 import sqlite3
 
-import logging
-logging.basicConfig()
-log = logging.getLogger(__file__)
-
-here = ''
+# here = os.environ['OPENSHIFT_APP_DIR']
+here = os.environ['OPENSHIFT_APP_DIR'] = os.path.dirname(os.path.abspath(__file__))
 
 # views
 @view_config(route_name='list', renderer='list.mako')
