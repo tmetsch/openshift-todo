@@ -1,17 +1,16 @@
 #!/usr/bin/python
-import wsgi_todo
 
-def application(environ, start_response):
+import os
 
-#    status = '200 OK'
-#    headers = [('Content-type', 'text/plain')]
-#
-#    start_response(status, headers)
-#
-#    ret = ["%s: %s\n" % (key, value)
-#           for key, value in environ.iteritems()]
-#    return ret
-    return wsgi_todo.application(environ, start_response)
+virtenv = os.environ['APPDIR'] + '/virtenv/'
+os.environ['PYTHON_EGG_CACHE'] = os.path.join(virtenv, 'lib/python2.6/site-packages')
+virtualenv = os.path.join(virtenv, 'bin/activate_this.py')
+try:
+    execfile(virtualenv, dict(__file__=virtualenv))
+except IOError:
+    pass
+
+from wsgi_todo import application
 
 if __name__ == '__main__':
     from wsgiref.simple_server import make_server

@@ -81,7 +81,7 @@ def application(environ, start_response):
     # static view setup
     config.add_static_view('static', os.path.join(here, 'static'))
     # scan for @view_config and @subscriber decorators
-    config.scan(package='wsgi_todo')
+    config.scan()
 
     # serve app
     return config.make_wsgi_app()(environ, start_response)
