@@ -5,9 +5,9 @@ import os
 import wsgi_todo
 
 #datadir = os.path.dirname(os.path.abspath(__file__)) + '/wsgi'
-datadir = os.environ['OPENSHIFT_APP_DIR']
+#datadir = os.environ['OPENSHIFT_APP_DIR']
 #here = os.path.join(datadir, '..')
-here = datadir
+#here = datadir
 
 def application(environ, start_response):
 
