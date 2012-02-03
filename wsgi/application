@@ -5,8 +5,8 @@ import os
 import wsgi_todo
 
 datadir = os.environ['OPENSHIFT_DATA_DIR']
-#datadir = os.path.dirname(os.path.abspath(__file__))
-here = os.path.join('..', datadir)
+#datadir = os.path.dirname(os.path.abspath(__file__)) + '/wsgi'
+here = os.path.join(datadir, '..')
 #here = datadir
 
 
@@ -36,7 +36,7 @@ def application(environ, start_response):
     return config.make_wsgi_app()(environ, start_response)
 
 if __name__ == '__main__':
-   from wsgiref.simple_server import make_server
-   httpd = make_server('localhost', 8051, application)
-   # Wait for a single request, serve it and quit.
-   httpd.serve_forever()
+    from wsgiref.simple_server import make_server
+    httpd = make_server('localhost', 8051, application)
+    # Wait for a single request, serve it and quit.
+    httpd.serve_forever()
