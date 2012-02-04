@@ -7,10 +7,10 @@ from pyramid.view import view_config
 import os
 import sqlite3
 
-here = os.environ['OPENSHIFT_APP_DIR'] = os.path.dirname(os.path.abspath(__file__))
+here = os.environ['OPENSHIFT_APP_DIR']
 
 #===============================================================================
-# The Pyramid Views 
+# The Pyramid Views
 #===============================================================================
 
 
@@ -18,7 +18,7 @@ here = os.environ['OPENSHIFT_APP_DIR'] = os.path.dirname(os.path.abspath(__file_
 def list_view(request):
     '''
     List a bunch of todo items.
-    
+
     request -- The request object.
     '''
     rs = request.db.execute("select id, name from tasks where closed = 0")
@@ -30,7 +30,7 @@ def list_view(request):
 def new_view(request):
     '''
     Insert a new entry in the db.
-        
+
     request -- The request object.
     '''
     if request.method == 'POST':
@@ -49,7 +49,7 @@ def new_view(request):
 def close_view(request):
     '''
     Resolve an open todo item.
-        
+
     request -- The request object.
     '''
     task_id = int(request.matchdict['id'])
@@ -75,7 +75,7 @@ def notfound_view(self):
 def new_request_subscriber(event):
     '''
     The entry point.
-    
+
     event -- An event.
     '''
     request = event.request
@@ -87,7 +87,7 @@ def new_request_subscriber(event):
 def close_db_connection(request):
     '''
     Close the sqllite connection.
-        
+
     request -- The request object.
     '''
     request.db.close()
@@ -97,7 +97,7 @@ def close_db_connection(request):
 def application_created_subscriber(event):
     '''
     When the application is created - make a new clean db.
-    
+
     event - An event.
     '''
     f = open(os.path.join(here, '..', 'data', 'schema.sql'), 'r')
@@ -116,7 +116,7 @@ def application_created_subscriber(event):
 def application(environ, start_response):
     '''
     A WSGI application.
-    
+
     Configure pyramid, add routes and finally server the app.
     '''
     settings = {}
