@@ -18,3 +18,9 @@ Quickstart
 4) Then push the repo upstream
     $ git push
 5) Done :-)
+
+See my blog post at 
+
+http://www.nohuddleoffense.de/2012/02/03/fun-with-openshift/
+
+for more details.
