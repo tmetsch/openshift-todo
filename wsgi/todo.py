@@ -10,6 +10,15 @@ import sqlite3
 here = os.environ['OPENSHIFT_APP_DIR']
 
 #===============================================================================
+#
+# This example was taken from
+#
+# http://docs.pylonsproject.org/projects/pyramid_tutorials/en/latest/
+#                                        single_file_tasks/single_file_tasks.html
+#
+#===============================================================================
+
+#===============================================================================
 # The Pyramid Views
 #===============================================================================
 
