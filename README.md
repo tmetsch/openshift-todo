@@ -11,13 +11,13 @@ applications. To use it, just follow the quickstart below.
 Quickstart
 ==========
 
-1) Create an account at http://openshift.redhat.com/
-2) Create a wsgi-3.2 application in the dashboard
-3) Clone the newly created repository
-4) edit your code
-4) Then push the repo upstream
+ * Create an account at http://openshift.redhat.com/
+ * Create a wsgi-3.2 application in the dashboard
+ * Clone the newly created repository
+ * edit your code (or pull this code in your repo)
+ * Then push the repo upstream
     $ git push
-5) Done :-)
+ * Done :-)
 
 See my blog post at 
 
